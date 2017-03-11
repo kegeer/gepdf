@@ -1,0 +1,44 @@
+[
+    {
+        "id": 1,
+        "result": {
+            "c_name": "sda",
+            "e_name": "",
+            "value": "",
+            "summary": "",
+            "desc": ""
+        }
+    },
+    {
+        "id": 2,
+        "result": {
+            "c_name": "sda",
+            "e_name": "",
+            "value": "",
+            "summary": "",
+            "desc": ""
+        }
+    }
+
+]
+
+{
+    "1": {
+        "c_name": "sda",
+        "e_name": "",
+        "value": "",
+        "summary": "",
+        "desc": "",
+        "type": "",
+        "category": ""
+    },
+    "2": {
+        "c_name": "sda",
+        "e_name": "",
+        "value": "",
+        "summary": "",
+        "desc": "",
+        "type": "",
+        "category": ""
+    }
+}

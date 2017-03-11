@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}Home{% endblock %}</title>
+
+
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="http://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://cdn.bootcss.com/font-awesome/4.7.0/fonts/fontawesome-webfont.svg">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    {% block style %}
+{% endblock %}
+</head>
+<div id="navbar-wrapper">
+    <header>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">报告自动生成系统</a>
+        </div>
+        <div id="navbar-collapse" class="collapse navbar-collapse">
+          <form class="navbar-form navbar-left" role="search">
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+            </span>
+            </div>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a id="user-profile" href="#" class="dropdown-toggle" data-toggle="dropdown">管理员,你好 <i class="fa fa-caret-down"></i></a>
+              <ul class="dropdown-menu dropdown-block" role="menu">
+                <li><a href="#">个人资料修改</a></li>
+                <li><a href="#">退出登录</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+</div>
+<div id="wrapper">
+    <div id="sidebar-wrapper">
+        <aside id="sidebar">
+            <ul id="sidemenu" class="sidebar-nav">
+                <li>
+                    <a href="/report">
+                      <span class="sidebar-icon"><i class="fa fa-dashboard"></i></span>
+                      <span class="sidebar-title">管理面板</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="/report/clients">
+                      <span class="sidebar-icon"><i class="fa fa-users"></i></span>
+                      <span class="sidebar-title">客户</span>
+                    </a>
+                </li>
+            </ul>
+          </aside>
+    </div>
+    <main id="page-content-wrapper" role="main">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="button" class="close" data-dismiss="alert" aria-label="Close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+            {{ messages }}
+          </div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+        {% block body %}
+      body_content
+    {% endblock %}
+    </main>
+</div>
+
+{% block js %}
+{% endblock %}
+<body>
+
+<script src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+<script src="http://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
