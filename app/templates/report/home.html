@@ -21,27 +21,59 @@
     <td> {{  client.source }}</td>
     <td>{{  client.report }}</td>
         <td>
-            <a href="{{ url_for('report.client_report', client_id=client.id) }}" class="btn btn-sm btn-default">
-                <i class="fa fa-file">预览报告</i>
-            </a>
-            <form action="{{ url_for('report.client_report_print', client_id=client.id) }}" method="POST">
-                <button type="submit" class="btn btn-sm btn-default">
-                    <i class="fa fa-print">打印报告</i>
-                </button>
-            </form>
-
+            <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#reportModal"
+                    data-resource="{{ url_for('report.client_report', client_id=client.id) }}"
+                    data-print="{{ url_for('report.client_report_print', client_id=client.id) }}">
+                <i class="fa fa-file">预览并打印报告</i>
+            </button>
         </td>
     <td>
         <a href="{{ url_for('report.client', client_id=client.id) }}" class="btn btn-sm btn-default">
             <i class="fa fa-eye"></i>
         </a>
-{#        <a href="{{ url_for('report.client_edit', client_id=client.id) }}" class="btn btn-sm btn-default">#}
-{#            <i class="fa fa-pencil"></i>#}
-{#        </a>#}
     </td>
     </tr>
     {% endfor %}
     </tbody>
     </table>
+    <!-- Modal -->
+    <div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel">报告预览</h4>
+                </div>
+                <div class="modal-body">
+                    <!-- 16:9 aspect ratio -->
+                    <div class="embed-responsive embed-responsive-4by3">
+                        <iframe class="embed-responsive-item" id="embed-responsive-item" src=""></iframe>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <form id="print-modal" action="" method="POST">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa fa-print">打印报告</i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
 
+{% block js %}
+    <script>
+        $('#reportModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget)
+            var report = button.data('resource')
+            var print = button.data('print')
+            console.log(report)
+            var modal = $(this)
+            modal.find('#embed-responsive-item').attr('src', report)
+            modal.find('#print-modal').attr('action', print)
+        })
+    </script>
 {% endblock %}

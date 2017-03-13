@@ -44,12 +44,13 @@ def client_report(client_id):
 
     return render_template('report.html',
                            client=client,
-                           result=result)
+                           result=result, )
 @report_blueprint.route('/client/<string:client_id>/report/print', methods=['POST'])
 def client_report_print(client_id):
     if request.method == 'POST':
         page = client_report(client_id)
-        pdf = pdfkit.from_string(page, False)
+        css = path.join(path.dirname(__file__), '../../static/css/mendel.css').replace('\\', '/')
+        pdf = pdfkit.from_string(page, False, css=css)
         response = make_response(pdf)
         response.headers['Content-Type'] = 'application/pdf'
         response.headers['Content-Disposition'] = 'inline; filename=output.pdf'

@@ -21,6 +21,8 @@ def make_shell_context():
     return dict(
         app = app,
         db = models.db,
+        Client=models.Client,
+        General=models.General,
         Info=models.Info,
         Metabolism=models.Metabolism,
         Species=models.Species,

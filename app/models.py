@@ -26,7 +26,7 @@ class Client(db.Model):
     receive_date = db.Column(db.DateTime(), nullable=True)
     inspect_date = db.Column(db.DateTime(), nullable=True)
     report_date = db.Column(db.DateTime(), default=datetime.datetime.utcnow())
-    report = db.Column(db.Boolean(), default=True)
+    report = db.Column(db.Boolean(), default=False)
     triglyceride = db.Column(db.Float(), nullable=True)
     cholesterol = db.Column(db.Float(), nullable=True)
     h_lipoprotein = db.Column(db.Float(), nullable=True)
@@ -45,9 +45,11 @@ class Client(db.Model):
         lazy='dynamic'
     )
 
-    def __init__(self, name):
+    def __init__(self, name, source, puyuan_id):
         self.id = str(uuid4())
         self.name = name
+        self.source = source
+        self.puyuan_id = puyuan_id
 
     def __repr__(self):
         return "<Model Client `{}`>".format(self.name)
@@ -101,7 +103,7 @@ class General(Info):
     __tablename__ = 'general'
 
     id = db.Column(db.Integer, db.ForeignKey('infos.id'), primary_key=True)
-    gn_type = db.Column(db.String(25))
+    # category = db.Column(db.String(25))
 
     __mapper_args__ = {
         'polymorphic_identity': 'gn'
@@ -119,7 +121,7 @@ class Metabolism(Info):
     __tablename__ = 'metabolism'
 
     id = db.Column(db.Integer, db.ForeignKey('infos.id'), primary_key=True)
-    me_type = db.Column(db.String(10))
+    category = db.Column(db.String(10))
     __mapper_args__ = {
         'polymorphic_identity': 'metabolism'
     }
@@ -136,7 +138,7 @@ class Genus(Info):
     __tablename__ = 'genus'
 
     id = db.Column(db.Integer, db.ForeignKey('infos.id'), primary_key=True)
-    ge_type = db.Column(db.String(10))
+    category = db.Column(db.String(10))
     __mapper_args__ = {
         'polymorphic_identity': 'ge'
     }
@@ -153,7 +155,7 @@ class Species(Info):
     __tablename__ = 'species'
 
     id = db.Column(db.Integer, db.ForeignKey('infos.id'), primary_key=True)
-    sp_type = db.Column(db.String(10))
+    category = db.Column(db.String(10))
 
     __mapper_args__ = {
         'polymorphic_identity': 'sp'
@@ -170,7 +172,7 @@ class Disease(Info):
     __tablename__ = 'disease'
 
     id = db.Column(db.Integer, db.ForeignKey('infos.id'), primary_key=True)
-    di_type = db.Column(db.String(10))
+    # category = db.Column(db.String(10))
     __mapper_args__ = {
         'polymorphic_identity': 'di'
     }
